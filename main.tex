@@ -23,6 +23,7 @@
 \usepackage{listings}
 \usepackage{tikz}
 \usepackage{fontspec}
+\usepackage{appendix}
 \usepackage[backend=biber, style=numeric]{biblatex}
 \addbibresource{references.bib}
 
@@ -386,7 +387,7 @@ Imagine a decentralized payroll system
 % Inline image with manual caption
 \vspace{1cm}
 \noindent\centering
-\includegraphics[width=1\textwidth]{code.png}
+\includegraphics[width=1\textwidth]{canggu.png}
 
 \noindent
 \textbf{Figure 1: Example payroll system}
@@ -430,9 +431,13 @@ Outcome: The contract completes in a single block, with no sequential queuing, a
 Canggu is more than a blockchain—it’s a foundation for the next generation of decentralized systems. By addressing quantum threats, MEV exploits, and computational inefficiencies, we empower a future where security, fairness, and performance coexist. Join us in building a resilient, innovative digital economy.
 \end{justify}
 
+\clearpage
+
+\appendix
+
+\section*{Appendix}
 
 \section{Mathematical Proofs}
-
 \subsection{DAG-Based Mempool: Formal Proofs}
 
 \begin{theorem}[MEV Resistance]
@@ -574,6 +579,51 @@ Where:
 \end{itemize}
 
 As transaction volume $n$ increases, $C_{\text{dag-compute}} \in \mathcal{O}(n^2)$ grows quadratically, eventually making $E[\text{MEV}] < 0$ for most MEV extraction attempts, effectively securing the network against such attacks.
+
+
+\section{Implementation Challenges}
+
+Several challenges were faced during the initial implementation; among them, we can enumerate: 
+
+\subsection{Quantum-Resistant Cryptography}
+
+\begin{itemize}
+    \item \textbf{Performance Overhead}: Quantum-resistant algorithms such as CRYSTALS-Dilithium and XMSS are computationally more expensive than traditional algorithms (e.g., ECDSA, SHA-256). This could lead to higher latency and resource consumption.
+
+    \item \textbf{Key Management}: Quantum-resistant key pairs (e.g., using CRYSTALS-Kyber) require larger key sizes and more complex key management systems, which could increase storage and bandwidth requirements.
+
+    \item \textbf{Transition Period}: During the transition from classical to quantum-resistant cryptography, supporting hybrid signatures (e.g., ECDSA + Dilithium) adds complexity to the protocol and wallet implementations.
+
+\end{itemize}
+
+% In terms of mitigation strategy, several approaches were chosen:
+
+% \begin{itemize}
+%     \item \textbf{Optimize cryptographic operations using hardware acceleration} (GPUs for parallel computation).
+%     \item \textbf{Implement efficient key rotation and management systems to handle larger key sizes}.
+% \end{itemize}
+
+
+\subsection{DAG-Based Mempool}
+
+\begin{itemize}
+
+\item \textbf{Complexity}: Managing a Directed Acyclic Graph (DAG) for transaction ordering is more complex than a simple FIFO queue. Validators must handle dependencies and ensure topological consistency, which increases computational overhead.
+
+\item \textbf{Scalability}: As the number of transactions grows, the DAG's size and complexity increase, potentially leading to longer validation times and higher memory usage.
+
+\item \textbf{MEV Resistance Trade-offs}: Although the DAG structure mitigates MEV, it may introduce new attack vectors, such as malicious actors creating complex dependency graphs to slow down the network.
+
+\end{itemize}
+
+\subsection{ZK-SNARKs for Verification}
+\begin{itemize}
+    \item \textbf{Proof Generation Cost}: Generating ZK-SNARK proofs is computationally expensive, requiring significant resources (e.g., GPUs). This could limit the number of nodes capable of participating in proof generation.
+
+    \item \textbf{Trusted Setup}: Many ZK-SNARK systems require a trusted setup, which introduces a potential security risk if the setup is compromised.
+
+    \item \textbf{Quantum Resistance}: While ZK-SNARKs are efficient, their underlying elliptic curves must be quantum-resistant (e.g., BLS12-381), which adds complexity to the implementation.
+\end{itemize}
 
 
 \nocite{*}
