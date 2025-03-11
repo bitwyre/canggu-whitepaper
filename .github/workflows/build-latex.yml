@@ -19,11 +19,11 @@ jobs:
     - name: Set up TeX Live
       run: |
         sudo apt-get update
-        sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-fonts-recommended texlive-fonts-extra
+        sudo apt-get install -y texlive-xetex texlive-latex-recommended texlive-fonts-recommended texlive-fonts-extra
 
     - name: Build LaTeX file
       run: |
-        pdflatex main.tex
+        xelatex main.tex
 
     - name: Upload PDF as artifact
       uses: actions/upload-artifact@v4
