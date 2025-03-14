@@ -1,6 +1,5 @@
 ## Block Schematics of Size Blockchain
 
-![Alt text](./canggu-architecture-flowchart.png)
 <img src="./canggu-architecture-flowchart.png">
 
 Here's a comprehensive architectural flowchart that visualizes how the four main components of the Canggu blockchain interact with each other:
